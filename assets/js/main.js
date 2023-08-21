@@ -1,6 +1,3 @@
-// const offset = 0;
-// const limit = 10;
-// const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`;
 
 function convertPokemonToLi(pokemon) {
   return `
@@ -24,15 +21,8 @@ function convertPokemonToLi(pokemon) {
 
 const pokemonsList = document.getElementById("pokemonsList");
 
-pokeApi.getPokemons().then((pokemons) => {
-  const listItens = [];
+pokeApi.getPokemons().then((pokemons = []) => {
 
-  pokemons.map()
+  pokemonsList.innerHTML += pokemons.map(convertPokemonToLi).join("");
 
-  for (let i = 0; i < pokemons.length; i++) {
-    const pokemon = pokemons[i];
-    listItens.push(convertPokemonToLi(pokemon));
-  }
-
-  console.log(listItens);
 });
