@@ -1,5 +1,15 @@
-function convertPokemonToLi(pokemon) {
-  return `
+const pokemonsList = document.getElementById("pokemonsList");
+const loadMoreButton = document.getElementById("loadMoreButton");
+const limit = 5;
+let offset = 0;
+
+// pokeApi.getPokemons().then((pokemons = []) => {
+//   pokemonsList.innerHTML += pokemons.map(convertPokemonToLi).join("");
+// });
+
+function loadPokemonItens(offset, limit) {
+  function convertPokemonToLi(pokemon) {
+    return `
     <li class="pokemon ${pokemon.type}" >
         <span class="number">${pokemon.number}</span>
         <span class="name">${pokemon.name}</span>
@@ -17,10 +27,16 @@ function convertPokemonToLi(pokemon) {
         />
         </div>
     </li>`;
+  }
+  pokeApi.getPokemons(offset, limit).then((pokemons = []) => {
+    const newHtml = pokemons.map(convertPokemonToLi).join("");
+    pokemonsList.innerHTML += newHtml;
+  });
 }
 
-const pokemonsList = document.getElementById("pokemonsList");
+loadPokemonItens(offset, limit);
 
-pokeApi.getPokemons().then((pokemons = []) => {
-  pokemonsList.innerHTML += pokemons.map(convertPokemonToLi).join("");
+loadMoreButton.addEventListener("click", () => {
+  offset += limit;
+  loadPokemonItens(offset, limit);
 });
